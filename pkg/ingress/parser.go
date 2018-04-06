@@ -252,7 +252,7 @@ func (c *controller) generateConfig() error {
 	}
 
 	var td hpi.TemplateData
-	
+
 	si := &hpi.SharedInfo{
 		CORSConfig: hpi.CORSConfig{
 			CORSEnabled:          c.Ingress.EnableCORS(),
