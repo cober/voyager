@@ -37,7 +37,7 @@ func HeaderName(v string) string {
 	return v[:index]
 }
 
-func HostACLs(host string, port int, nodePort int32, useNodePort bool) []string {
+func HostACLs(host string, port int, nodePort, redirectToPort int32, useNodePort bool) []string {
 	var conditions []string
 	host = strings.TrimSpace(host)
 
@@ -51,6 +51,11 @@ func HostACLs(host string, port int, nodePort int32, useNodePort bool) []string 
 			conditions = append(conditions, hostMatcher(fmt.Sprintf("%s:%d", host, port)))
 		}
 	}
+
+	if port == 80 && redirectToPort > 0 {
+		conditions = append(conditions, hostMatcher(fmt.Sprintf("%s:%d", host, redirectToPort)))
+	}
+
 	return conditions
 }
 
